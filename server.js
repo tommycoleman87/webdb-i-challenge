@@ -37,4 +37,15 @@ server.put('/accounts/:id', (req, res) => {
         res.status(500).json(err)
     })
 })
+
+server.delete('/accounts/:id', (req, res) => {
+    const id = req.params.id;
+    db('accounts').where({id: id}).del()
+    .then(result => {
+        res.status(200).json(result)
+    })
+    .catch(err => {
+        res.status(500).json(result)
+    })
+})
 module.exports = server;
