@@ -14,4 +14,27 @@ server.get('/accounts', (req, res) => {
         res.status(500).json(err)
     })
 })
+
+server.post('/accounts', (req, res) => {
+    const account = req.body;
+    db('accounts').insert({name: account.name, budget: account.budget})
+    .then(result => {
+        res.status(201).json(result)
+    })
+    .catch(err => {
+        res.status(500).json(err)
+    })
+})
+
+server.put('/accounts/:id', (req, res) => {
+    const id = req.params.id;
+    const account = req.body;
+    db('accounts').where({id: id}).update({name: account.name, budget: account.budget})
+    .then(result => {
+        res.status(200).json(result)
+    })
+    .catch(err => {
+        res.status(500).json(err)
+    })
+})
 module.exports = server;
